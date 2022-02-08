@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Spoof Cart</string>
+    <string name="button_to_navigate_to_shopping_cart_fragment">button to navigate to shopping cart fragment</string>
 </resources>
