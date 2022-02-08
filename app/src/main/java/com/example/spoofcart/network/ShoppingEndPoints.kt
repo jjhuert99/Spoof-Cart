@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface ShoppingEndPoints {
 
-    @GET(".")
+    @GET("products?limit=12")
     suspend fun getShoppingItems() : Response<List<ShoppingItem>>
 }
