@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.spoofcart.Clicked
+import com.example.spoofcart.ShoppingItemAdapter
 import com.example.spoofcart.databinding.HomeFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +26,11 @@ class HomeFragment : Fragment() {
         val binding = HomeFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.itemRV.adapter = ShoppingItemAdapter(Clicked{
+
+        })
         viewModel.doneNav()
+
         binding.shoppingCartFab.setOnClickListener{
             viewModel.justNav()
             if(viewModel.navYet.value == true) {
@@ -32,7 +38,6 @@ class HomeFragment : Fragment() {
                     .navigate(HomeFragmentDirections.actionHomeFragmentToShoppingCartFragment())
             }
         }
-
         return binding.root
     }
 

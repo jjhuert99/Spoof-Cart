@@ -7,6 +7,9 @@
         <variable
             name="item"
             type="com.example.spoofcart.network.ShoppingItem" />
+        <variable
+            name="click"
+            type="com.example.spoofcart.Clicked" />
     </data>
 
     <LinearLayout
@@ -18,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="8dp"
-            android:paddingVertical="8dp">
+            android:paddingVertical="8dp"
+            android:background="@color/post_grey">
 
             <TextView
                 android:id="@+id/itemCategory"
@@ -27,6 +31,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Item Category"
+                android:text="@{item.category}"
                 style="@style/item_info" />
 
             <TextView
@@ -37,24 +42,17 @@
                 app:layout_constraintTop_toBottomOf="@id/itemCategory"
                 tools:text="Item Name and Title"
                 android:paddingVertical="6dp"
-                style="@style/item_info"/>
-
-            <TextView
-                android:id="@+id/itemDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/itemTitle"
-                tools:text="Item Description"
+                android:text="@{item.title}"
                 style="@style/item_info"/>
 
             <TextView
                 style="@style/item_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBaseline_toBaselineOf="@+id/itemDesc"
+                app:layout_constraintBaseline_toBaselineOf="@+id/itemCategory"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Item Price" />
+                tools:text="Item Price"
+                android:text="@{`$` + item.price}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.legacy.widget.Space
