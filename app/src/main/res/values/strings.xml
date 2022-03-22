@@ -3,4 +3,5 @@
     <string name="button_to_navigate_to_shopping_cart_fragment">button to navigate to shopping cart fragment</string>
     <string name="spoof_market">Spoof Market</string>
     <string name="shopping_cart">Shopping Cart</string>
+    <string name="product_desc">Product Description</string>
 </resources>
