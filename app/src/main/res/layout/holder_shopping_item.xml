@@ -22,7 +22,8 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="8dp"
             android:paddingVertical="8dp"
-            android:background="@color/post_grey">
+            android:background="@color/post_grey"
+            android:onClick="@{() -> click.onClick(item)}">
 
             <TextView
                 android:id="@+id/itemCategory"

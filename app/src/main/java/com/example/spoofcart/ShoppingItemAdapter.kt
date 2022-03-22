@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spoofcart.databinding.HolderShoppingItemBinding
 import com.example.spoofcart.network.ShoppingItem
 
-class ShoppingItemAdapter(val clickListener: Clicked) :
-    ListAdapter<ShoppingItem, ShoppingItemAdapter.ItemViewHolder>(DiffCallback) {
+class ShoppingItemAdapter(val clickListener: Clicked)
+    : ListAdapter<ShoppingItem, ShoppingItemAdapter.ItemViewHolder>(DiffCallback) {
 
     class ItemViewHolder(private var binding: HolderShoppingItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
             fun bind(item: ShoppingItem, clickListener: Clicked){
                 binding.item = item
+                binding.click = clickListener
                 binding.executePendingBindings()
             }
     }
@@ -39,9 +40,7 @@ class ShoppingItemAdapter(val clickListener: Clicked) :
         holder.bind(item, clickListener)
     }
 }
-class Clicked(val clickListener: () -> Unit){
-    //fun onClick(post: Children, webFalse: Boolean) = clickListener(post.data.id, post.data.selftext, post.data.permalink, webFalse)
+class Clicked(val clickListener: (postDesc: String) -> Unit){
+    fun onClick(item: ShoppingItem) = clickListener(item.description)
 }
-/*class Clicked {
 
-}*/

@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.spoofcart.Clicked
+import com.example.spoofcart.R
 import com.example.spoofcart.ShoppingItemAdapter
 import com.example.spoofcart.databinding.HomeFragmentBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,11 +25,21 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val binding = HomeFragmentBinding.inflate(inflater)
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.itemRV.adapter = ShoppingItemAdapter(Clicked{
-
+        binding.itemRV.adapter = ShoppingItemAdapter( Clicked {
+            postDesc ->
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.product_desc))
+                .setMessage(postDesc)
+                .setPositiveButton("Add"){ dialog, which ->
+                }
+                .setNegativeButton("Cancel"){ dialog, which ->
+                }
+                .show()
         })
         viewModel.doneNav()
 
