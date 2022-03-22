@@ -40,7 +40,7 @@ class ShoppingItemAdapter(val clickListener: Clicked)
         holder.bind(item, clickListener)
     }
 }
-class Clicked(val clickListener: (postDesc: String) -> Unit){
-    fun onClick(item: ShoppingItem) = clickListener(item.description)
+class Clicked(val clickListener: (post: ShoppingItem) -> Unit){
+    fun onClick(item: ShoppingItem) = clickListener(item)
 }
 
