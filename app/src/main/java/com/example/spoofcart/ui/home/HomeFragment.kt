@@ -30,6 +30,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val gson = Gson()
+        var ourList = mutableListOf<CartItem>()
 
         val masterKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         val sharedPreferences = EncryptedSharedPreferences.create(
@@ -58,9 +59,8 @@ class HomeFragment : Fragment() {
                         post.price,
                         post.category
                     )
-                    val json = gson.toJson(cartItem)
-                    editor.putString(post.id.toString(), json)
-                    editor.apply()
+                    ourList.add(cartItem)
+
                 }
                 .setNegativeButton("Cancel") { dialog, which ->
                 }
@@ -71,12 +71,13 @@ class HomeFragment : Fragment() {
         binding.shoppingCartFab.setOnClickListener {
             viewModel.justNav()
             if (viewModel.navYet.value == true) {
+                val json = gson.toJson(ourList)
+                editor.putString("ShoppingList", json)
+                editor.apply()
                 this.findNavController()
                     .navigate(HomeFragmentDirections.actionHomeFragmentToShoppingCartFragment())
             }
         }
         return binding.root
     }
-
-
 }
