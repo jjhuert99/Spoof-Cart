@@ -24,6 +24,7 @@
             android:layout_marginTop="25dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopping_cart_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -32,6 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:spanCount="1" />
+            app:spanCount="1"
+            app:cartItems="@{viewModel.shoppingCart}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
