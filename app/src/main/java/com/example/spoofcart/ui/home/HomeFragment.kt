@@ -1,7 +1,6 @@
 package com.example.spoofcart.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import com.example.spoofcart.Clicked
 import com.example.spoofcart.R
 import com.example.spoofcart.ShoppingItemAdapter
 import com.example.spoofcart.databinding.HomeFragmentBinding
 import com.example.spoofcart.sharedpref.CartItem
+import com.example.spoofcart.sharedpref.SharedPrefImpl
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,19 +26,10 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val gson = Gson()
-        var ourList = mutableListOf<CartItem>()
 
-        val masterKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-        val sharedPreferences = EncryptedSharedPreferences.create(
-            "FILE",
-            masterKey,
-            requireContext().applicationContext,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        val editor = sharedPreferences.edit()
+        var sharedPreferences = SharedPrefImpl(requireContext().applicationContext)
 
+        var checkAdd: Boolean = false
 
         val binding = HomeFragmentBinding.inflate(inflater)
 
@@ -59,7 +47,9 @@ class HomeFragment : Fragment() {
                         post.price,
                         post.category
                     )
-                    ourList.add(cartItem)
+                    //call SharedPref class add function and pass CartItem
+                    sharedPreferences.addOneItem(cartItem)
+                    checkAdd = true
 
                 }
                 .setNegativeButton("Cancel") { dialog, which ->
@@ -71,9 +61,9 @@ class HomeFragment : Fragment() {
         binding.shoppingCartFab.setOnClickListener {
             viewModel.justNav()
             if (viewModel.navYet.value == true) {
-                val json = gson.toJson(ourList)
-                editor.putString("ShoppingList", json)
-                editor.apply()
+                if (checkAdd) {
+                    sharedPreferences.addWholeList("ShoppingList")
+                }
                 this.findNavController()
                     .navigate(HomeFragmentDirections.actionHomeFragmentToShoppingCartFragment())
             }
