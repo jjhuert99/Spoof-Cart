@@ -19,14 +19,15 @@ class ShoppingCartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var sharedPreferences = SharedPrefImpl(requireContext().applicationContext)
+        //var sharedPreferences = SharedPrefImpl(requireContext().applicationContext)
 
 
         val binding = ShoppingCartFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        sharedPreferences.getString("NEW_FILE", "")?.let { viewModel.getCartItems(it) }
+        //sharedPreferences.getString("NEW_FILE", "")?.let { viewModel.getCartItems(it) }
+        viewModel.getShoppingList()
         binding.shoppingCartRv.adapter = ShoppingCartAdapter()
 
         return binding.root

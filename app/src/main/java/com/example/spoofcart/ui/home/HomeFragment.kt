@@ -27,10 +27,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        var sharedPreferences = SharedPrefImpl(requireContext().applicationContext)
-
-        var checkAdd: Boolean = false
-
         val binding = HomeFragmentBinding.inflate(inflater)
 
         binding.lifecycleOwner = this
@@ -48,8 +44,8 @@ class HomeFragment : Fragment() {
                         post.category
                     )
                     //call SharedPref class add function and pass CartItem
-                    sharedPreferences.addOneItem(cartItem)
-                    checkAdd = true
+                    viewModel.addOneItemSharedPrefs(cartItem)
+                    viewModel.checkAdd = true
 
                 }
                 .setNegativeButton("Cancel") { dialog, which ->
@@ -61,8 +57,8 @@ class HomeFragment : Fragment() {
         binding.shoppingCartFab.setOnClickListener {
             viewModel.justNav()
             if (viewModel.navYet.value == true) {
-                if (checkAdd) {
-                    sharedPreferences.addWholeList("ShoppingList")
+                if (viewModel.checkAdd) {
+                    viewModel.addWholeListSharedPrefs("ShoppingList")
                 }
                 this.findNavController()
                     .navigate(HomeFragmentDirections.actionHomeFragmentToShoppingCartFragment())
